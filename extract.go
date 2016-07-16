@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"net/http"
 	"regexp"
 	"strings"
 
@@ -89,7 +88,7 @@ func encoding(node *html.Node) string {
 // FIXME: improve.
 // use machine learning.
 // consider length of text.
-// instead of []byte, s should be io.Reader, and FromURL should be FromString.
+// instead of []byte, s should be io.Reader.
 func Extract(s []byte) (string, string, error) {
 	r := bytes.NewReader(s)
 	doc, err := html.Parse(r)
@@ -202,19 +201,6 @@ func Extract(s []byte) (string, string, error) {
 	content := conversionString(&b, enc)
 	title = conversionString(strings.NewReader(title), enc)
 	return title, content, nil
-}
-
-func FromURL(url string) (string, string, error) {
-	resp, err := http.Get(url)
-	if err != nil {
-		return "", "", err
-	}
-	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return "", "", err
-	}
-	return Extract(body)
 }
 
 func conversion(inStream io.Reader, outStream io.Writer, enc string) error {

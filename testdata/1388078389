@@ -1,0 +1,678 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns:og="http://ogp.me/ns#">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<title>伝説のベイジアン先生にベイズの基礎を教えてもらえる「図解・ベイズ統計「超」入門」を読んだ - EchizenBlog-Zwei</title>
+<link rel="start" href="/" title="EchizenBlog-Zwei">
+<link rel="help" href="/help" title="ヘルプ">
+<link rel="prev" href="/echizen_tm/20131013/1381687129" title="[書籍]まったく最小二乗法は最高...">
+<link rel="next" href="/echizen_tm/20131229/1388329638" title="[書籍]固有値について理解を深め...">
+
+<link rel="stylesheet" href="http://d.st-hatena.com/statics/css/base.css?0bbd03d5acc8e46d9dbb741f71c120e3544cd0d0" type="text/css" media="all">
+<link rel="stylesheet" href="http://d.st-hatena.com/statics/css/headerstyle_wh.css?085ad8dfa10172c0ef76e1edc80efda798bc6101" type="text/css" media="all">
+<link rel="stylesheet" href="http://d.st-hatena.com/statics/theme/pure-soda/pure-soda.css?8edad165758da238ced8a6ab33adc4fcd391a982" type="text/css" media="all">
+
+
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://d.hatena.ne.jp/echizen_tm/rss">
+<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://d.hatena.ne.jp/echizen_tm/rss2">
+
+<link rel="meta" type="application/rdf+xml" title="FOAF" href="http://d.hatena.ne.jp/echizen_tm/foaf" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://d.hatena.ne.jp/echizen_tm/opensearch/diary.xml" title="EchizenBlog-Zwei内日記検索" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://d.hatena.ne.jp/echizen_tm/opensearch/archive.xml" title="EchizenBlog-Zwei内一覧検索" />
+
+
+
+<link rel="shortcut icon" href="http://d.hatena.ne.jp/images/wh_favicon.ico">
+
+
+
+<link rel="canonical" href="http://d.hatena.ne.jp/echizen_tm/20131226/1388078389">
+
+
+<style type="text/css">
+<!-- 
+
+-->
+</style>
+
+
+<script type="text/javascript">if(/[\x3c\x3e\x22]/.test(location.hash))location.hash=location.hash.replace(/[\x3c\x3e\x22]/g,'');if(/[\x3c\x3e]/.test(document.referrer))location.href=location.href;</script>
+
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="伝説のベイジアン先生にベイズの基礎を教えてもらえる「図解・ベイズ統計「超」入門」を読んだ - EchizenBlog-Zwei">
+<meta property="og:url" content="http://d.hatena.ne.jp/echizen_tm/20131226/1388078389">
+<meta property="og:description" content="「図解・ベイズ統計「超」入門 あいまいなデータから未来を予測する技術」という本を読んだ。 社会人のアヤ..">
+<meta property="og:site_name" content="はてなダイアリー">
+
+
+<!--
+<rdf:RDF
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:foaf="http://xmlns.com/foaf/0.1/">
+<rdf:Description rdf:about="http://d.hatena.ne.jp/echizen_tm/20131226/1388078389">
+   <foaf:maker rdf:parseType="Resource">
+     <foaf:holdsAccount>
+       <foaf:OnlineAccount foaf:accountName="echizen_tm">
+         <foaf:accountServiceHomepage rdf:resource="http://www.hatena.ne.jp/" />
+       </foaf:OnlineAccount>
+     </foaf:holdsAccount>
+   </foaf:maker>
+</rdf:Description>
+</rdf:RDF>
+-->
+
+<link rel="alternate" media="handheld" type="text/html" href="http://d.hatena.ne.jp/echizen_tm/mobile?date=20131226&section=1388078389" />
+<!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+  rdf:about="http://d.hatena.ne.jp/echizen_tm/20131226/1388078389"
+  trackback:ping="http://d.hatena.ne.jp/echizen_tm/20131226/1388078389"
+  dc:title="[書籍]伝説のベイジアン先生にベイズの基礎を教えてもらえる「図解・ベイズ統計「超」入門」を読んだ"
+  dc:identifier="http://d.hatena.ne.jp/echizen_tm/20131226/1388078389" />
+</rdf:RDF>
+-->
+
+<script type="text/javascript" src="http://d.st-hatena.com/statics/js/MochiKit/1125/Base.js?085ad8dfa10172c0ef76e1edc80efda798bc6101"></script>
+<script type="text/javascript" src="http://d.st-hatena.com/statics/js/MochiKit/1125/Iter.js?085ad8dfa10172c0ef76e1edc80efda798bc6101"></script>
+<script type="text/javascript" src="http://d.st-hatena.com/statics/js/MochiKit/1125/DOM.js?085ad8dfa10172c0ef76e1edc80efda798bc6101"></script>
+<script type="text/javascript" src="http://d.st-hatena.com/statics/js/MochiKit/1125/Style.js?085ad8dfa10172c0ef76e1edc80efda798bc6101"></script>
+<script type="text/javascript" src="http://d.st-hatena.com/statics/js/MochiKit/1125/Signal.js?085ad8dfa10172c0ef76e1edc80efda798bc6101"></script>
+<script type="text/javascript" src="http://d.st-hatena.com/statics/js/MochiKit/1125/Async.js?085ad8dfa10172c0ef76e1edc80efda798bc6101"></script>
+<script type="text/javascript" src="http://d.st-hatena.com/statics/js/MochiKit/1125/Logging.js?085ad8dfa10172c0ef76e1edc80efda798bc6101"></script>
+<script type="text/javascript" src="http://d.st-hatena.com/statics/js/BookmarkCommentViewer.js?085ad8dfa10172c0ef76e1edc80efda798bc6101" charset="utf-8"></script>
+
+
+
+<meta name="twitter:card" content="summary">
+
+<meta name="twitter:site" content="@hatenablog">
+
+
+
+<script type="text/javascript" src="http://s.hatena.ne.jp/js/HatenaStar.js"></script>
+<script type="text/javascript">
+Hatena.Star.SiteConfig = {
+  entryNodes: {
+    'div.section': {
+      uri: 'h3 a',
+      title: 'h3',
+      container: 'h3'
+    }
+  }
+};
+Hatena.Author  = new Hatena.User('echizen_tm');
+Hatena.DiaryName  = new Hatena.User('echizen_tm');
+
+</script>
+
+
+
+
+
+<script type="text/javascript" src="http://d.st-hatena.com/statics/js/adcolor.js?085ad8dfa10172c0ef76e1edc80efda798bc6101"></script>
+
+
+<script type="text/javascript" src="http://d.st-hatena.com/statics/js/quick_pager.js?73e8efd3adc8709460b4c8ff9af5a3d4c97eba4e"></script>
+<script type="text/javascript" src="http://d.st-hatena.com/statics/js/diary_utils.js?085ad8dfa10172c0ef76e1edc80efda798bc6101"></script>
+<script type="text/javascript" src="http://d.st-hatena.com/statics/js/max_width_fotolife.js?2d5c0a4915fdb8930122a506dbf154b9db674a3b"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="http://d.st-hatena.com/statics/js/jquery-1.4.2.min.js?1c983e39f64600478e5a829cf7a7a61f68527715"></script>
+<script type="text/javascript">
+  jQuery.noConflict()(function($){
+    var j$ = jQuery;
+  });
+</script>
+
+
+
+
+</head>
+<body>
+
+  <script>Hatena.Diary.UaTrakingID = 'UA-46127385-8';</script>
+ 
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-58NPH6"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-58NPH6');</script>
+<!-- End Google Tag Manager -->
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.3&appId=189164841141201";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+<div id="simple-header">
+
+  <a href="http://www.hatena.ne.jp/"><img src="/images/hatena-simple_wh.gif" alt="Hatena::" title="Hatena::" id="logo-hatena" width="65" height="17"></a><a href="/"><img src="/images/diary-simple_wh.gif" alt="ブログ(Diary)" title="Diary" id="logo-diary" width="43" height="17"></a>
+  <form method="get" action="/search" class="search-form">
+    <input type="text" class="search-word" name="word" value=""><input name="name" value="echizen_tm" type="hidden"><input type="submit" name="diary" value="日記" class="search-button"><input type="submit" name="submit" value="検索" class="search-button">
+  </form>
+  <ul class="menu">
+    <li><a href="/echizen_tm/">ブログトップ</a></li>
+    <li><a href="/echizen_tm/archive">記事一覧</a></li>
+
+
+
+    <li><a href="https://www.hatena.ne.jp/login?backurl=http%3A%2F%2Fd.hatena.ne.jp%2Fechizen_tm%2F20131226%2F1388078389&add_timestamp=1">ログイン</a></li>
+    <li><a href="https://www.hatena.ne.jp/register?location=http%3A%2F%2Fd.hatena.ne.jp%3Fvia%3D200186&amp;via=200186">無料ブログ開設</a></li>
+
+  </ul>
+</div>
+
+
+
+<h1><a href="http://d.hatena.ne.jp/echizen_tm/">EchizenBlog-Zwei</a> <a href="http://a.hatena.ne.jp/append?http://d.hatena.ne.jp/echizen_tm/"><img src="http://d.hatena.ne.jp/images/a_append_wh.gif" title="このページをアンテナに追加" alt="このページをアンテナに追加" border="0" width="16" height="12" class="icon"></a> <a href="http://d.hatena.ne.jp/echizen_tm/rss"><img src="http://d.hatena.ne.jp/images/rss_wh.gif" alt="RSSフィード" title="RSSフィード" border="0" width="24" height="12" class="icon"></a></h1>
+<div class="hatena-body">
+<div class="main">
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="calendar" id="pager-top">
+  <a rel="prev" href="/echizen_tm/20131013/1381687129" class="prev">&lt;[書籍]まったく最小二乗法は最高...</a>&nbsp;<span class="delimiter">|</span>&nbsp;<a rel="next" href="/echizen_tm/20131229/1388329638" class="next">[書籍]固有値について理解を深め...&gt;</a><span id="edit-in-place-add"></span>
+</div>
+<div id="days">
+
+<div class="day">
+<h2><a href="http://d.hatena.ne.jp/echizen_tm/20131226" rel="nofollow"><span class="date">2013-12-26</span></a></h2>
+
+<div class="body">
+
+<!-- rakuten_ad_target_begin -->
+<!-- google_ad_section_start -->
+
+		<div class="section">
+			<h3 class="title"><a href="/echizen_tm/20131226/1388078389" name="1388078389">伝説のベイジアン先生にベイズの基礎を教えてもらえる「図解・ベイズ統計「超」入門」を読んだ</a></h3>
+			<p class="sectionheader"><span class="sectioncategory"><a href="/echizen_tm/searchdiary?word=%2A%5B%BD%F1%C0%D2%5D" class="sectioncategory">書籍</a></span></p>
+			<p>「図解・<a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%D9%A5%A4%A5%BA">ベイズ</a><a class="keyword" href="http://d.hatena.ne.jp/keyword/%C5%FD%B7%D7">統計</a>「超」入門 あいまいなデータから未来を予測する技術」という本を読んだ。</p>
+			<p>社会人のアヤとケンが社内研修で伝説の<a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%D9%A5%A4%A5%B8%A5%A2%A5%F3">ベイジアン</a>先生から<a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%D9%A5%A4%A5%BA">ベイズ</a>の基礎を教わる、という設定の会話形式で<a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%D9%A5%A4%A5%BA">ベイズ</a>について書かれた<a class="keyword" href="http://d.hatena.ne.jp/keyword/%C6%FE%CC%E7%BD%F1">入門書</a>。社内研修で<a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%D9%A5%A4%A5%BA">ベイズ</a>のプロから指導を受けるとかどんだけ恵まれてるんだ。</p>
+			<a name="seemore"></a>
+
+			<br>
+
+			<p>アヤさんは大学で<a class="keyword" href="http://d.hatena.ne.jp/keyword/%C5%FD%B7%D7">統計</a>をやったが<a class="keyword" href="http://d.hatena.ne.jp/keyword/%BF%F4%B3%D8">数学</a>は詳しくないという設定。ただ時々鋭い質問をする。また<a class="keyword" href="http://d.hatena.ne.jp/keyword/%C5%FD%B7%D7">統計</a>に詳しいイケメン兄がいる。</p>
+			<p>ケンくんは知識は全くなく最後まで「わかりません」を連発する。彼女持ちの<a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%EA%A5%A2%BD%BC">リア充</a>。</p>
+			<p>伝説の<a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%D9%A5%A4%A5%B8%A5%A2%A5%F3">ベイジアン</a>先生は社内研修の講師。<a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%D9%A5%A4%A5%BA">ベイズ</a>の基礎を豊富な具体例で教えてくれるまじぱない先生。あまりにもいけてるので数カ月後に<a class="keyword" href="http://d.hatena.ne.jp/keyword/%C5%BE%BF%A6">転職</a>しそうな感じ。</p>
+			<br>
+
+			<p>内容は1章が導入、2章が同時確率・<a class="keyword" href="http://d.hatena.ne.jp/keyword/%BE%F2%B7%EF%C9%D5%A4%AD%B3%CE%CE%A8">条件付き確率</a>、3章が<a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%D9%A5%A4%A5%BA">ベイズ</a>の定理、4章が<a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%D9%A5%A4%A5%BA">ベイズ</a>の定理を用いた<a class="keyword" href="http://d.hatena.ne.jp/keyword/%BB%F6%B8%E5%B3%CE%CE%A8">事後確率</a>計算の具体例、5章が事例の追加による<a class="keyword" href="http://d.hatena.ne.jp/keyword/%BB%F6%C1%B0%B3%CE%CE%A8">事前確率</a>の更新(具体例としてナイーブ<a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%D9%A5%A4%A5%BA">ベイズ</a>による<a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%B9%A5%D1%A5%E0%A5%D5%A5%A3%A5%EB%A5%BF">スパムフィルタ</a>)、6章が<a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%D1%A5%E9%A5%E1%A1%BC%A5%BF">パラメータ</a>を<a class="keyword" href="http://d.hatena.ne.jp/keyword/%B3%CE%CE%A8%CA%D1%BF%F4">確率変数</a>として扱う話、7章が<a class="keyword" href="http://d.hatena.ne.jp/keyword/%C0%B5%B5%AC%CA%AC%C9%DB">正規分布</a>の平均を<a class="keyword" href="http://d.hatena.ne.jp/keyword/%B3%CE%CE%A8%CA%D1%BF%F4">確率変数</a>として扱う話、といった感じ。</p>
+			<p>5章までは四則演算がわかれば問題なく理解できる。<a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%D9%A5%A4%A5%BA">ベイズ</a>の入門的な資料では<a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%D9%A5%A4%A5%BA">ベイズ</a>の定理とナイーブ<a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%D9%A5%A4%A5%BA">ベイズ</a>だけ書いてお茶を濁しているケースが多いが、<a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%D9%A5%A4%A5%BA">ベイズ</a>の本質は分布の更新なのでそのへんがわかりやすく書かれている本書は<a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%D9%A5%A4%A5%BA">ベイズ</a>の入門としては非常にいけていると感じた。</p>
+			<p>6、7章は指数や<a class="keyword" href="http://d.hatena.ne.jp/keyword/%C0%D1%CA%AC">積分</a>が出てくるのと、分布の<a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%D1%A5%E9%A5%E1%A1%BC%A5%BF">パラメータ</a>を<a class="keyword" href="http://d.hatena.ne.jp/keyword/%B3%CE%CE%A8%CA%D1%BF%F4">確率変数</a>として扱うという発想を受け入れるのがちょっと大変かもという印象(もっともこのへんはそもそも説明が難しいので本書はわかりやすく書いている方だとは思う)。</p>
+			<br>
+
+			<p>とりあえず初心者は5章まで読んでおくといい感じなんじゃないかと思う。個人的には<a class="keyword" href="http://d.hatena.ne.jp/keyword/%B5%A1%B3%A3%B3%D8%BD%AC">機械学習</a>の初心者には<a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%D9%A5%A4%A5%BA">ベイズ</a>に触れるのはやめて<a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%D1%A1%BC%A5%BB%A5%D7%A5%C8%A5%ED%A5%F3">パーセプトロン</a>をやれと言ってきたのだけど、この本くらい良い解説書があるなら<a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%D9%A5%A4%A5%BA">ベイズ</a>をやってみるのもいいかなという感じだった。さすが伝説の<a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%D9%A5%A4%A5%B8%A5%A2%A5%F3">ベイジアン</a>先生。</p>
+			<p>頻度主義VS<a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%D9%A5%A4%A5%B8%A5%A2%A5%F3">ベイジアン</a>の話とか、最後に測度論の存在を匂わせて終わるとか小ネタも充実してるので内容を知ってる人でもわりと楽しめる気がする。</p>
+			<p><iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?t=echizentm-22&o=9&p=8&l=as1&asins=4797366575&ref=qf_sp_asin_til&fc1=000000&IS2=1&lt1=_blank&m=amazon&lc1=0000FF&bc1=000000&bg1=FFFFFF&f=ifr" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe></p>
+			<p class="sectionfooter"><a href="/echizen_tm/20131226/1388078389">Permalink</a> | <a href="/echizen_tm/20131226/1388078389#c">コメント(0)</a> | <a href="/echizen_tm/20131226/1388078389#tb">トラックバック(3)</a> | 02:19 <a href="http://b.hatena.ne.jp/entry/http://d.hatena.ne.jp/echizen_tm/20131226/1388078389" class="bookmark-icon"><img src="http://d.hatena.ne.jp/images/b_entry_wh.gif" border="0" title="伝説のベイジアン先生にベイズの基礎を教えてもらえる「図解・ベイズ統計「超」入門」を読んだを含むブックマーク" alt="伝説のベイジアン先生にベイズの基礎を教えてもらえる「図解・ベイズ統計「超」入門」を読んだを含むブックマーク" width="16" height="12" class="icon"></a> <a href="http://b.hatena.ne.jp/entry/http://d.hatena.ne.jp/echizen_tm/20131226/1388078389" class="bookmark-count"><img src="http://b.hatena.ne.jp/entry/image/http://d.hatena.ne.jp/echizen_tm/20131226/1388078389" title="はてなブックマーク - 伝説のベイジアン先生にベイズの基礎を教えてもらえる「図解・ベイズ統計「超」入門」を読んだ" alt=""></a> <img class="hatena-bcomment-view-icon" src="http://r.hatena.ne.jp/images/popup.gif" onclick="javascript:BookmarkCommentViewer.iconImageClickHandler(this, 'http://d.hatena.ne.jp/echizen_tm/20131226/1388078389', event);" title="伝説のベイジアン先生にベイズの基礎を教えてもらえる「図解・ベイズ統計「超」入門」を読んだのブックマークコメント" alt="伝説のベイジアン先生にベイズの基礎を教えてもらえる「図解・ベイズ統計「超」入門」を読んだのブックマークコメント" width="13" height="13"></p>
+
+		</div>
+
+<div id="google_afc_user_1" class="section">
+</div>
+<script>
+  var hatenadfp = hatenadfp || {};
+  hatenadfp.adUnits = hatenadfp.adUnits || [];
+  hatenadfp.adUnits.push(
+    { unitName: 'diary_user', size: [[300, 250], [336, 280]], divId: 'google_afc_user_1', allowContentMatch: true }
+  );
+  hatenadfp.isNGContent = false;
+</script>
+
+<!-- google_ad_section_end -->
+<!-- rakuten_ad_target_end -->
+
+
+</div>
+
+<form id="comment-form" method="post" action="/echizen_tm/comment#c" class="comment">
+<input type="hidden" name="mode" value="enter">
+<input type="hidden" name="rkm" value="">
+<input type="hidden" name="date" value="2013-12-26">
+<div class="comment">
+  <div class="caption"><a name="c">コメントを書く</a></div>
+  <div class="commentshort">
+    
+    
+
+    <a name="error-message"></a>
+    <p class="message" style="display:none"></p>
+
+    
+
+    
+            
+    <p class="commentform">
+      <span class="commentator">
+        <span class="usermailconfirm"><input name="usermail" size="1" value=""><input name="userurl" size="1" value="">スパム対策のためのダミーです。もし見えても何も入力しないでください<br></span>
+        <span class="username">
+        <img src="http://www.hatena.ne.jp/images/guest_icon.gif" class="hatena-id-icon" alt="ゲスト" title="ゲスト" height="16" width="16">
+        <input type="hidden" name="section" value="1388078389">
+        
+          <input id="comment-username" name="username" size="15">
+        
+        </span>
+        
+          <span class="usermail"><img src="/images/icon-usermail.gif" style="vertical-align:middle;margin-right:3px;"><input id="comment-usermail" name="useremail" size="15" value=""></span>
+          <span class="userurl"><img src="/images/icon-userurl.gif" style="vertical-align:middle;margin-right:3px;"><input id="comment-userurl" name="useruri" size="15" value=""></span>
+        
+      </span>
+<br>
+      <!-- NOT_VERIFIED_COMMENT_AUTH -->
+      <textarea id="comment-textarea" name="body" value="" cols="60" rows="3"></textarea><br>
+      
+          <div class="captcha">
+            <img src="/echizen_tm/captcha?1468631156" class="captcha-image">
+            <span class="captcha-message">画像認証</span><br />
+            <input type="text" name="captcha_code" size="10" class="captcha-string" id="comment-captcha">
+          </div>
+      
+      <span class="comment-submit"><input type="submit" id="comment-form-button" value="投稿"></span>
+    </p>
+
+      <script type="text/javascript" src="/js/diary_comment_edit_form.js"></script>
+    
+
+  </div>
+</div>
+
+</form>
+
+
+
+
+
+  
+  <div class="refererlist">
+    <div class="caption">
+      <a name="tb">トラックバック</a> - http://d.hatena.ne.jp/echizen_tm/20131226/1388078389
+    </div>
+    
+      
+      <ul>
+        
+          <li>
+            <a href="http://d.hatena.ne.jp/araresp/20131227/1388108714" title=" 2013/12/27(金)の出来事 Pages:106 【主張】首相靖国参拝　国民との約束果たした　平和の維持に必要な行為だ - MSN産経ニュース 参拝、制止退け強行　党幹部「もう誰も止められない」：朝日新聞デジタル 紅白あまちゃんスペシャルビッグバンド出演決定 メンバー詳細です - " rel="nofollow">My Bookmark - 2013/12/27(金)の出来事</a></li>
+        
+          <li>
+            <a href="http://d.hatena.ne.jp/mamoruk/20140202/p1" title=" 詳しい人が読んでも楽しめる入門書は良書 先々週から妻が毎日お弁当を作ってくれるようになり、健康的な生活を送っている。食材や日用品は生協で注文している（iPad や iPhone で頼めるようだ）ので出歩かなくてよいのだが、頼むタイミングの問題でちょっと足りないものがあ" rel="nofollow">武蔵野日記 - 詳しい人が読んでも楽しめる入門書は良書</a></li>
+        
+          <li>
+            <a href="http://d.hatena.ne.jp/hoxo_m/20151228/p1" title=" ベイズ統計の入門書が出版ラッシュなのでまとめてみた 最近、ベイズ統計の入門書がたくさん出版されているので、ここで一旦まとめてみようと思います。 1. 基礎からのベイズ統計学: ハミルトニアンモンテカルロ法による実践的入門 (2015/6/25) 基礎からのベイズ統計学: ハミ" rel="nofollow">ほくそ笑む - ベイズ統計の入門書が出版ラッシュなのでまとめてみた</a></li>
+        
+      </ul>
+    
+  </div>
+  
+  
+  
+  <div id="diary-pc-trackback-rectangle" style="margin-bottom: 15px;"></div>
+  <script>
+    var hatenadfp = hatenadfp || {};
+    hatenadfp.adUnits = hatenadfp.adUnits || [];
+    hatenadfp.adUnits.push(
+      { unitName: 'diary_user_track', size: [[300,250],[336,280]], divId: 'diary-pc-trackback-rectangle' }
+    );
+    hatenadfp.isNGContent = false;
+  </script>
+  <script type="text/javascript" charset="UTF-8" src="//b.hatena.ne.jp/js/hatena_dfp2.js"></script>
+  
+
+
+
+
+
+    <div class="refererlist">
+      <div class="caption">リンク元</div>
+      <ul>
+          <li>480 <a href="http://b.hatena.ne.jp/" rel="nofollow">http://b.hatena.ne.jp/</a></li>
+          <li>231 <a href="http://www.hatena.ne.jp/" rel="nofollow">http://www.hatena.ne.jp/</a></li>
+          <li>210 <a href="http://b.hatena.ne.jp/hotentry/it" rel="nofollow">http://b.hatena.ne.jp/hotentry/it</a></li>
+          <li>149 <a href="http://b.hatena.ne.jp/hotentry" rel="nofollow">http://b.hatena.ne.jp/hotentry</a></li>
+          <li>147 <a href="http://feedly.com/index.html" rel="nofollow">http://feedly.com/index.html</a></li>
+          <li>132 <a href="http://t.co/DR2qYNEl1r" rel="nofollow">http://t.co/DR2qYNEl1r</a></li>
+          <li>97 <a href="http://reader.livedoor.com/reader/" rel="nofollow">http://reader.livedoor.com/reader/</a></li>
+          <li>76 <a href="https://www.google.co.jp/" rel="nofollow">https://www.google.co.jp/</a></li>
+          <li>58 <a href="http://b.hatena.ne.jp/entry/d.hatena.ne.jp/echizen_tm/20131226/1388078389" rel="nofollow">http://b.hatena.ne.jp/entry/d.hatena.ne.jp/echizen_tm/20131226/1388078389</a></li>
+          <li>57 <a href="http://t.co/lVoF9fkwnD" rel="nofollow">http://t.co/lVoF9fkwnD</a></li>
+      </ul>
+      
+    </div>
+
+
+
+
+</div>
+
+
+
+</div>
+<div class="calendar" id="pager-bottom">
+  <a rel="prev" href="/echizen_tm/20131013/1381687129" class="prev">&lt;[書籍]まったく最小二乗法は最高...</a>&nbsp;<span class="delimiter">|</span>&nbsp;<a rel="next" href="/echizen_tm/20131229/1388329638" class="next">[書籍]固有値について理解を深め...&gt;</a>
+</div>
+</div>
+<div class="sidebar">
+	<div class="hatena-module hatena-module-profile">
+  <div class="hatena-moduletitle">プロフィール</div>
+  <div class="hatena-modulebody">
+    <div class="hatena-profile">
+      <p class="hatena-profile-image"><a href="/echizen_tm/about"><img src="http://www.st-hatena.com/users/ec/echizen_tm/profile.gif" alt="echizen_tm" /></a></p>
+      <p class="hatena-profile-id"><a href="/echizen_tm/about">echizen_tm</a></p>
+      <p class="hatena-profile-body">ミルキィホームズを心の支えに日々生きています。簡潔データ構造、機械学習に興味あり。【宝の地図見つけました。</p>
+    </div>
+  </div>
+</div>
+
+
+<script src="http://widgets.twimg.com/j/2/widget.js"></script>
+
+<a href="http://projecteuler.net/"><img src="http://projecteuler.net/profile/echizen_tm.png"></img></a>
+
+<script>
+new TWTR.Widget({
+  version: 2,
+  type: 'profile',
+  rpp: 3,
+  interval: 6000,
+  width: 200,
+  height: 300,
+  theme: {
+    shell: {
+      background: '#99ccff',
+      color: '#333333'
+    },
+    tweets: {
+      background: '#ffffff',
+      color: '#666666',
+      links: '#3366cc'
+    }
+  },
+  features: {
+    scrollbar: false,
+    loop: false,
+    live: false,
+    hashtags: true,
+    timestamp: true,
+    avatars: false,
+    behavior: 'all'
+  }
+}).render().setUser('echizen_tm').start();
+</script>
+
+	<div class="hatena-module hatena-module-calendar2">
+<div class="hatena-moduletitle">カレンダー</div>
+<div class="hatena-modulebody">
+<table class="calendar" summary="calendar">
+<tr>
+<td class="calendar-prev-month" colspan="2"><a href="/echizen_tm/201311" title="201311" rel="nofollow">&lt;&lt;</a></td>
+<td class="calendar-current-month" colspan="3"><a href="/echizen_tm/archive/201312" rel="nofollow">2013/12</a></td>
+<td class="calendar-next-month" colspan="2"><a href="/echizen_tm/201401" title="201401" rel="nofollow">&gt;&gt;</a></td>
+</tr>
+<tr>
+<td class="calendar-sunday">日</td>
+<td class="calendar-weekday">月</td>
+<td class="calendar-weekday">火</td>
+<td class="calendar-weekday">水</td>
+<td class="calendar-weekday">木</td>
+<td class="calendar-weekday">金</td>
+<td class="calendar-saturday">土</td>
+</tr>
+	<tr>
+		<td class="calendar-day">1</td>
+		<td class="calendar-day">2</td>
+		<td class="calendar-day">3</td>
+		<td class="calendar-day">4</td>
+		<td class="calendar-day">5</td>
+		<td class="calendar-day">6</td>
+		<td class="calendar-day">7</td>
+	</tr>
+	<tr>
+		<td class="calendar-day">8</td>
+		<td class="calendar-day">9</td>
+		<td class="calendar-day">10</td>
+		<td class="calendar-day">11</td>
+		<td class="calendar-day">12</td>
+		<td class="calendar-day">13</td>
+		<td class="calendar-day">14</td>
+	</tr>
+	<tr>
+		<td class="calendar-day">15</td>
+		<td class="calendar-day">16</td>
+		<td class="calendar-day">17</td>
+		<td class="calendar-day">18</td>
+		<td class="calendar-day">19</td>
+		<td class="calendar-day">20</td>
+		<td class="calendar-day">21</td>
+	</tr>
+	<tr>
+		<td class="calendar-day">22</td>
+		<td class="calendar-day">23</td>
+		<td class="calendar-day">24</td>
+		<td class="calendar-day">25</td>
+		<td class="calendar-day day-selected"><a href="/echizen_tm/20131226" title="26">26</a></td>
+		<td class="calendar-day">27</td>
+		<td class="calendar-day">28</td>
+	</tr>
+	<tr>
+		<td class="calendar-day"><a href="/echizen_tm/20131229" title="29">29</a></td>
+		<td class="calendar-day"><a href="/echizen_tm/20131230" title="30">30</a></td>
+		<td class="calendar-day">31</td>
+		<td class="calendar-day"></td>
+		<td class="calendar-day"></td>
+		<td class="calendar-day"></td>
+		<td class="calendar-day"></td>
+	</tr>
+</table>
+	</div>
+</div>
+
+
+<script language="javascript" type="text/javascript" src="http://b.hatena.ne.jp/js/widget.js" charset="utf-8"></script>
+<script language="javascript" type="text/javascript">
+Hatena.BookmarkWidget.url   = "http://d.hatena.ne.jp/echizen_tm/";
+Hatena.BookmarkWidget.title = "最近の注目エントリ";
+Hatena.BookmarkWidget.sort  = "";
+Hatena.BookmarkWidget.width = 0;
+Hatena.BookmarkWidget.num   = 5;
+Hatena.BookmarkWidget.theme = "hatenadiary";
+Hatena.BookmarkWidget.load();
+</script>
+<script language="javascript" type="text/javascript" src="http://b.hatena.ne.jp/js/widget.js" charset="utf-8"></script>
+<script language="javascript" type="text/javascript">
+Hatena.BookmarkWidget.url   = "http://d.hatena.ne.jp/echizen_tm/";
+Hatena.BookmarkWidget.title = "人気エントリ";
+Hatena.BookmarkWidget.sort  = "count";
+Hatena.BookmarkWidget.width = 0;
+Hatena.BookmarkWidget.num   = 10;
+Hatena.BookmarkWidget.theme = "hatenadiary";
+Hatena.BookmarkWidget.load();
+</script>
+
+	<div class="hatena-module hatena-module-comment">
+<div class="hatena-moduletitle">最近のコメント</div>
+<div class="hatena-modulebody">
+<ul class="hatena-recentcomment">
+<li><a href="/echizen_tm/20151113/1447430520#c">2015-11-13</a>&nbsp;ｔｔ</li>
+<li><a href="/echizen_tm/20151113/1447430520#c">2015-11-13</a>&nbsp;ｔｔ</li>
+<li><a href="/echizen_tm/20151110/1447170358#c">2015-11-10</a>&nbsp;Nemurihimesama</li>
+<li><a href="/echizen_tm/20151110/1447170358#c">2015-11-10</a>&nbsp;haskell</li>
+<li><a href="/echizen_tm/20110114/1295030258#c">2011-01-14</a>&nbsp;echizen_tm</li>
+</ul>
+</div>
+</div>
+
+	<div class="hatena-module hatena-module-trackback">
+<div class="hatena-moduletitle">最近のトラックバック</div>
+<div class="hatena-modulebody">
+<ul class="hatena-recentcomment">
+<li><a href="/echizen_tm/20150422/1429720151#tb">2015-04-22</a>&nbsp;<a href="http://d.hatena.ne.jp/nohzen/20160327/1459064254">日記 - 機械学習</a></li>
+<li><a href="/echizen_tm/20131226/1388078389#tb">2013-12-26</a>&nbsp;<a href="http://d.hatena.ne.jp/hoxo_m/20151228/p1">ほくそ笑む - ベイズ統計の入門書が出版ラッシュなのでまとめてみた</a></li>
+<li><a href="/echizen_tm/20151113/1447430520#tb">2015-11-13</a>&nbsp;<a href="http://d.hatena.ne.jp/kinneko/20151117/p40">kinneko@転職先募集中の日記 -  文系でも機械学習がわかるようにな...</a></li>
+<li><a href="/echizen_tm/20140914/1410697535#tb">2014-09-14</a>&nbsp;<a href="http://d.hatena.ne.jp/jetbead/20141220/1419012475">Negative/Positive Thinking - AdaDeltaを試す</a></li>
+<li><a href="/echizen_tm/20140329#tb">2014-03-29</a>&nbsp;<a href="http://twitter.com/echizen_tm/status/451296089363075072">Twitter / @echizen_tm</a></li>
+</ul>
+</div>
+</div>
+
+</div>
+
+</div>
+
+
+
+
+
+  <script type="text/javascript" src="http://b.hatena.ne.jp/js/hatena_dfp2.js" charset="UTF-8"></script>
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  var days = document.getElementById('days');
+  if (days && days.innerHTML.indexOf("今週のお題") != -1) {
+    _gaq.push(['_setCustomVar', 2, 'campaign', 'odai', 3]);
+  }
+
+  if (days && /\u4eca\u9031\u306e\u304a\u984c/.test(days.innerHTML)) {
+    _gaq.push(['_setCustomVar', 2, 'campaign', 'odai', 3]);
+  }
+
+  if (days && /ScanSnap\u7279\u5225\u30e2\u30c7\u30eb\u30fb\u30d6\u30ed\u30b0\u3067\u5ba3\u4f1d\u30b3\u30f3\u30c6\u30b9\u30c8/.test(days.innerHTML)) {
+    _gaq.push(['_setCustomVar', 2, 'campaign', 'scansnap1401bcn4ssacro', 3]);
+  }
+
+  if (days && /\u7279\u5225\u304a\u984c\u300c\u9752\u6625\u306e\u4e00\u518a\u300d/.test(days.innerHTML)) {
+    _gaq.push(['_setCustomVar', 2, 'campaign', 'pdmagazine', 3]);
+  }
+
+  if (days && /\u7279\u5225\u304a\u984c\u300c\u5fc3\u6e29\u307e\u308b\u30de\u30ca\u30fc\u306e\u8a71\u300d/.test(days.innerHTML)) {
+    _gaq.push(['_setCustomVar', 2, 'campaign', 'jrwest', 3]);
+  }
+
+  if (days && /Presso\u4f7f\u3063\u3066\u307f\u305f/.test(days.innerHTML)) {
+    _gaq.push(['_setCustomVar', 2, 'campaign', 'presso1404', 3]);
+  }
+
+  if (days && /CodeIQ\u306e\u554f\u984c\u30fb\u30d1\u30ba\u30eb\u3092\u8003\u3048\u3088\u3046\uff01/.test(days.innerHTML)) {
+    _gaq.push(['_setCustomVar', 2, 'campaign', 'codeiq_matsuri2013_2_2', 3]);
+  }
+
+  if (days && /2013\u5e74\u306b\u3084\u308a\u305f\u3044\u3053\u3068/.test(days.innerHTML)) {
+    _gaq.push(['_setCustomVar', 2, 'campaign', 'newyear2013', 3]);
+  }
+
+  if (days && /2012\u5e74\u30dc\u30c4\u738b\u6c7a\u5b9a\u6226\uff01\u30d5\u30eb\u30bf\u88fd\u83d3\ud7\u306f\u3066\u306a\u30d6\u30ed\u30b0\u304a\u984c\u30ad\u30e3\u30f3\u30da\u30fc\u30f3/.test(days.innerHTML)) {
+    _gaq.push(['_setCustomVar', 2, 'campaign', 'furuta', 3]);
+  }
+
+  if (days && /\u300c\u884c\u3063\u3066\u307f\u305f\u3044\u304a\u5e97\u30fb\u30ec\u30b9\u30c8\u30e9\u30f3\u300d/.test(days.innerHTML)) {
+    _gaq.push(['_setCustomVar', 2, 'campaign', 'gnavi201512', 3]);
+  }
+
+  if (days && /\u6d77\u5916\u30c9\u30e9\u30de\u300e\u30e9\u30a4\u30fb\u30c8\u30a5\u30fb\u30df\u30fc \u5618\u306e\u77ac\u9593\u300f\u89b3\u305f\u3044\uff01|\u300e\u30e9\u30a4\u30fb\u30c8\u30a5\u30fb\u30df\u30fc \u5618\u306e\u77ac\u9593\u300f\u7b2c1\u8a71\u306e\u611f\u60f3\u3092\u6559\u3048\u3066\u304f\u3060\u3055\u3044|\u4eca\u3060\u304b\u3089\u8a00\u3048\u308b\u300c\u5618\u3092\u3064\u3044\u3066\u3057\u307e\u3063\u305f\u30a8\u30d4\u30bd\u30fc\u30c9\u300d\u3092\u6559\u3048\u3066\u304f\u3060\u3055\u3044|\u3060\u307e\u3055\u308c\u305f\u3051\u3069\u3001\u8a31\u305b\u3066\u3057\u307e\u3063\u305f\u5618\u3092\u6559\u3048\u3066\u304f\u3060\u3055\u3044/.test(days.innerHTML)) {
+    _gaq.push(['_setCustomVar', 2, 'campaign', 'lietome', 3]);
+  }
+
+  if (days && /\u30de\u30a4\u30d9\u30b9\u30c8\u30bd\u30f3\u30b02013/.test(days.innerHTML)) {
+    _gaq.push(['_setCustomVar', 2, 'campaign', 'mybestsong2013', 3]);
+  }
+
+  if (days && /\u7d0d\u6dbc\uff01\u307b\u3093\u3068\u306b\u3042\u3063\u305f\u6016\u3044\u30b3\u30fc\u30c9/.test(days.innerHTML)) {
+    _gaq.push(['_setCustomVar', 2, 'campaign', 'codeiq_matsuri2013_2_1', 3]);
+  }
+
+  if (days && /\u590f\u306e\u5199\u771f2013/.test(days.innerHTML)) {
+    _gaq.push(['_setCustomVar', 2, 'campaign', 'photocon2013summer', 3]);
+  }
+
+  if (days && /Windows\/Office\u6b66\u52c7\u4f1d/.test(days.innerHTML)) {
+    _gaq.push(['_setCustomVar', 2, 'campaign', 'WindowsDevOpen', 3]);
+  }
+
+  if (days && /\u300c\u79c1\u306f\u3007\u3007\u738b\uff01\u300d\u30d0\u30a4\u30af\u738b\ud7\u306f\u3066\u306a\u30d6\u30ed\u30b0\u304a\u984c\u30ad\u30e3\u30f3\u30da\u30fc\u30f3/.test(days.innerHTML)) {
+    _gaq.push(['_setCustomVar', 2, 'campaign', 'bike-o', 3]);
+  }
+
+  if (days && /Visa\u30d7\u30ea\u30da\u30a4\u30c9\u300cV\u30d7\u30ea\u30ab\u300d\u8a66\u3057\u305f\u3044\uff01|Visa\u30d7\u30ea\u30da\u30a4\u30c9\u300cV\u30d7\u30ea\u30ab\u300d\u3001\u81ea\u5206\u306a\u3089\u3053\u3046\u4f7f\u3046\uff01|V\u30d7\u30ea\u30ab\u304c1\u4e07\u5186\u5206\u3042\u3063\u305f\u3089\u3001\u30cd\u30c3\u30c8\u3067\u4f55\u3092\u8cb7\u3044\u307e\u3059\u304b\uff1f/.test(days.innerHTML)) {
+    _gaq.push(['_setCustomVar', 2, 'campaign', 'vpreca', 3]);
+  }
+
+  if (days && /\u30a2\u30a4\u30c7\u30e0 \u30a8\u30f3\u30b8\u30cb\u30a2\u30ad\u30e3\u30ea\u30a2Hacks\u5171\u6709\u30d7\u30ed\u30b8\u30a7\u30af\u30c8|\u30a8\u30f3\u30b8\u30cb\u30a2\u3068\u3057\u3066\u306e\u3001\u3068\u3063\u3066\u304a\u304d\u306e\u30ad\u30e3\u30ea\u30a2Hacks\u3092\u6559\u3048\u3066\u304f\u3060\u3055\u3044|\u3042\u306a\u305f\u304c\u30a8\u30f3\u30b8\u30cb\u30a2\u8ee2\u8077\u30b5\u30a4\u30c8\u3092\u4f5c\u308b\u306a\u3089\u3001\u3069\u3093\u306a\u30b5\u30a4\u30c8\u306b\u3057\u307e\u3059\u304b\uff1f|5\u5e74\u5f8c\u306e\u300c\u30a8\u30f3\u30b8\u30cb\u30a2\u306e\u50cd\u304d\u65b9\u300d\u306f\u3001\u3069\u3046\u5909\u308f\u3063\u3066\u3044\u3066\u307b\u3057\u3044\u3067\u3059\u304b\uff1f/.test(days.innerHTML)) {
+    _gaq.push(['_setCustomVar', 2, 'campaign', 'aidemcareer', 3]);
+  }
+
+  if (days && /\u306f\u3066\u306a\u30c0\u30a4\u30a2\u30ea\u30fc10\u5468\u5e74\u304a\u3081\u3067\u3068\u3046\uff01/.test(days.innerHTML)) {
+    _gaq.push(['_setCustomVar', 2, 'campaign', 'hatenadiary10th', 3]);
+  }
+
+  if (days && /\u3086\u304f\u5e74\u304f\u308b\u5e742015/.test(days.innerHTML)) {
+    _gaq.push(['_setCustomVar', 2, 'campaign', '2014-2015campaign', 3]);
+  }
+
+  if (days && /\u8aad\u307f\u653e\u984c\u3067\u30b3\u30b9\u30d1\u3088\u3057\uff01\u96fb\u5b50\u66f8\u7c4d\u30a2\u30d7\u30eayomel.jp\u30ad\u30e3\u30f3\u30da\u30fc\u30f3/.test(days.innerHTML)) {
+    _gaq.push(['_setCustomVar', 2, 'campaign', 'yomel', 3]);
+  }
+
+  if (days && /\u30bb\u30c4\u30e4\u30af\u30a8\u30b9\u30c8/.test(days.innerHTML)) {
+    _gaq.push(['_setCustomVar', 2, 'campaign', 'setsuyaquest', 3]);
+  }
+
+  if (days && /\u79cb\u306e\u591c\u9577\u306f\u8aad\u66f8\u3068\u30d6\u30ed\u30b0/.test(days.innerHTML)) {
+    _gaq.push(['_setCustomVar', 2, 'campaign', 'bookreview2013fall', 3]);
+  }
+
+  if (days && /\u7279\u5225\u304a\u984c\u300c\u82b8\u8853\u306e\u79cb\u300d/.test(days.innerHTML)) {
+    _gaq.push(['_setCustomVar', 2, 'campaign', 'caillebotte', 3]);
+  }
+
+  if (days && /\u30a8\u30a4\u30d7\u30ea\u30eb\u30d5\u30fc\u30eb2014/.test(days.innerHTML)) {
+    _gaq.push(['_setCustomVar', 2, 'campaign', 'aprilfool2014', 3]);
+  }
+
+
+  _gaq.push(['c._setAccount', 'UA-12757207-1'], ['c._trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<!-- CG:1,CH:1,ICG:6,ICH:3,T: -->
+</body>
+</html>

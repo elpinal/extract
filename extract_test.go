@@ -2,29 +2,36 @@ package extract
 
 import (
 	"fmt"
+	"io/ioutil"
+	"path/filepath"
 	"testing"
 )
 
 func TestExtract(t *testing.T) {
 	var tests = []struct {
-		url   string
-		title string
+		filename string
+		title    string
 	}{
-		// FIXME: use httptest.
-		{"http://hail2u.net/blog/internet/interests.html", "興味の変遷 - Weblog - Hail2u.net"},
-		{"https://nippo.wikihub.io/@r7kamura/20160709190837", "日報 2016-07-10 - 日報"},
-		{"http://d.hatena.ne.jp/echizen_tm/20131226/1388078389", "伝説のベイジアン先生にベイズの基礎を教えてもらえる「図解・ベイズ統計「超」入門」を読んだ - EchizenBlog-Zwei"},
-		{"https://nippo.wikihub.io/@woxtu/20160710180958", "日報 2016-07-10 - 日報"},
+		{"interests.html", "興味の変遷 - Weblog - Hail2u.net"},
+		{"20160709190837", "日報 2016-07-10 - 日報"},
+		{"1388078389", "伝説のベイジアン先生にベイズの基礎を教えてもらえる「図解・ベイズ統計「超」入門」を読んだ - EchizenBlog-Zwei"},
+		{"20160710180958", "日報 2016-07-10 - 日報"},
 	}
 
 	for i, test := range tests {
-		t.Run(fmt.Sprint("L", i), func(t *testing.T) { testExtract(test.url, test.title, t) })
+		t.Run(fmt.Sprint("L", i), func(t *testing.T) { testExtract(test.filename, test.title, t) })
 	}
 }
 
-func testExtract(url, expectedTitle string, t *testing.T) {
+func testExtract(filename, expectedTitle string, t *testing.T) {
 	t.Parallel()
-	title, content, err := FromURL(url)
+	path := filepath.Join("testdata", filename)
+	buf, err := ioutil.ReadFile(path)
+	if err != nil {
+		t.Fatalf("could not read %v: %v", path, err)
+	}
+
+	title, content, err := Extract(buf)
 	if err != nil {
 		t.Fatal(err)
 	}
