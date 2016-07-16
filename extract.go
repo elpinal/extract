@@ -120,13 +120,7 @@ func Extract(s []byte) (string, string, error) {
 			}
 		}
 
-		if n.Type == html.ElementNode && n.Data == "title" {
-			title = n.FirstChild.Data
-		} else if n.Type == html.ElementNode && n.Data == "meta" {
-			if e := encoding(n); e != "" {
-				enc = e
-			}
-		} else if _, toIgnore := tagNamesToIgnore[n.Data]; n.Type == html.ElementNode && !toIgnore && !ignoreItself {
+		if _, toIgnore := tagNamesToIgnore[n.Data]; n.Type == html.ElementNode && !toIgnore && !ignoreItself {
 			var classIDWeight int
 			for _, a := range n.Attr {
 				if a.Key == "class" || a.Key == "id" {
