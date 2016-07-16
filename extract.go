@@ -88,10 +88,8 @@ func encoding(node *html.Node) string {
 // FIXME: improve.
 // use machine learning.
 // consider length of text.
-// instead of []byte, s should be io.Reader.
-func Extract(s []byte) (string, string, error) {
-	r := bytes.NewReader(s)
-	doc, err := html.Parse(r)
+func Extract(rd io.Reader) (string, string, error) {
+	doc, err := html.Parse(rd)
 	if err != nil {
 		return "", "", err
 	}

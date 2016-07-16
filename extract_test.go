@@ -1,6 +1,7 @@
 package extract
 
 import (
+	"bytes"
 	"fmt"
 	"io/ioutil"
 	"path/filepath"
@@ -30,8 +31,9 @@ func testExtract(filename, expectedTitle string, t *testing.T) {
 	if err != nil {
 		t.Fatalf("could not read %v: %v", path, err)
 	}
+	rd := bytes.NewReader(buf)
 
-	title, content, err := Extract(buf)
+	title, content, err := Extract(rd)
 	if err != nil {
 		t.Fatal(err)
 	}
