@@ -89,6 +89,7 @@ func encoding(node *html.Node) string {
 // FIXME: improve.
 // use machine learning.
 // consider length of text.
+// instead of []byte, s should be io.Reader, and FromURL should be FromString.
 func Extract(s []byte) (string, string, error) {
 	r := bytes.NewReader(s)
 	doc, err := html.Parse(r)
@@ -209,7 +210,7 @@ func Extract(s []byte) (string, string, error) {
 	return title, content, nil
 }
 
-func ExtractFromURL(url string) (string, string, error) {
+func FromURL(url string) (string, string, error) {
 	resp, err := http.Get(url)
 	if err != nil {
 		return "", "", err

@@ -24,7 +24,7 @@ func TestExtract(t *testing.T) {
 
 func testExtract(url, expectedTitle string, t *testing.T) {
 	t.Parallel()
-	title, content, err := ExtractFromURL(url)
+	title, content, err := FromURL(url)
 	if err != nil {
 		t.Fatal(err)
 	}
