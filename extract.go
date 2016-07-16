@@ -64,13 +64,6 @@ func removeChild(n, c *html.Node) {
 	*/
 }
 
-func nth(nodes []*html.Node, n int) *html.Node {
-	if n >= len(nodes) {
-		return &html.Node{Parent: nil}
-	}
-	return nodes[n]
-}
-
 func encoding(node *html.Node) string {
 	if node.Type == html.ElementNode && node.Data == "meta" {
 		for _, a := range node.Attr {
@@ -182,7 +175,8 @@ func Extract(rd io.Reader) (string, string, error) {
 	} else {
 		var commonAncestor *html.Node
 	loop:
-		for f, s, i := nodes[0].Parent, nodes[1].Parent, 0; i < len(nodes)-1; f, s, i = commonAncestor, nth(nodes, i+2).Parent, i+1 {
+		for f, s, i := nodes[0].Parent, nodes[1].Parent, 0; i < len(nodes)-1; f, i = commonAncestor, i+1 {
+			s = nodes[i+1].Parent
 			for c := f; c != nil; c = c.Parent {
 				for c2 := s; c2 != nil; c2 = c2.Parent {
 					if c == c2 {
