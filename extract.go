@@ -13,11 +13,6 @@ import (
 )
 
 var tagNamesToIgnore = map[string]int{
-	//"a":      0,
-	//"body":   0,
-	//"html":   0,
-	//"svg":    0,
-
 	"embed":    0,
 	"form":     0,
 	"iframe":   0,
@@ -113,11 +108,6 @@ func removeChild(n, c *html.Node) {
 	if c.PrevSibling != nil {
 		c.PrevSibling.NextSibling = c.NextSibling
 	}
-	/*
-		c.Parent = nil
-		c.PrevSibling = nil
-		c.NextSibling = nil
-	*/
 }
 
 func encoding(node *html.Node) string {
