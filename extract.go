@@ -39,7 +39,67 @@ var tagNamesToIgnoreOnlyItself = map[string]int{
 }
 
 var negativeRegexp = regexp.MustCompile("breadcrumb|combx|comment|contact|disqus|foot|footer|footnote|hidden|link|media|meta|mod-conversations|pager|pagination|promo|reaction|related|scroll|share|shoutbox|sidebar|social|sponsor|tags|toolbox|widget")
+var negativePattern = []string{
+	"breadcrumb",
+	"combx",
+	"comment",
+	"contact",
+	"disqus",
+	"foot",
+	"footer",
+	"footnote",
+	"hidden",
+	"link",
+	"media",
+	"meta",
+	"mod-conversations",
+	"pager",
+	"pagination",
+	"promo",
+	"reaction",
+	"related",
+	"scroll",
+	"share",
+	"shoutbox",
+	"sidebar",
+	"social",
+	"sponsor",
+	"tags",
+	"toolbox",
+	"widget",
+}
 var positiveRegexp = regexp.MustCompile(`article|body|content|entry|hentry|page\b|post|text`)
+var positivePattern = []string{
+	"article",
+	"body",
+	"content",
+	"entry",
+	"hentry",
+	"page",
+	"post",
+	"text",
+}
+
+func isAlphabetic(s byte) bool {
+	return ('A' <= s && s <= 'Z') || ('a' <= s && s <= 'z')
+}
+
+// TODO: add test.
+func indexWord(s, sep string) int {
+	i := strings.Index(s, sep)
+	n := len(sep)
+	switch {
+	case i < 0:
+		return i
+	case len(s) == n:
+		return i
+	case i == 0 && isAlphabetic(s[n:][0]):
+		return -1
+	case i > 0 && isAlphabetic(s[i-1:][0]):
+		return -1
+	}
+	return i
+}
 
 func removeChild(n, c *html.Node) {
 	if c.Parent != n {
@@ -78,6 +138,8 @@ func encoding(node *html.Node) string {
 	return ""
 }
 
+var noRegexp bool
+
 // FIXME: improve.
 // use machine learning.
 // consider length of text.
@@ -114,11 +176,24 @@ func Extract(rd io.Reader) (string, string, error) {
 			var classIDWeight int
 			for _, a := range n.Attr {
 				if a.Key == "class" || a.Key == "id" {
-					if s := positiveRegexp.FindString(a.Val); s != "" {
-						classIDWeight++
-					}
-					if s := negativeRegexp.FindString(a.Val); s != "" {
-						classIDWeight--
+					if noRegexp {
+						for _, pat := range positivePattern {
+							if indexWord(a.Val, pat) >= 0 {
+								classIDWeight++
+							}
+						}
+						for _, pat := range negativePattern {
+							if indexWord(a.Val, pat) >= 0 {
+								classIDWeight--
+							}
+						}
+					} else {
+						if s := positiveRegexp.FindString(a.Val); s != "" {
+							classIDWeight++
+						}
+						if s := negativeRegexp.FindString(a.Val); s != "" {
+							classIDWeight--
+						}
 					}
 				}
 			}
