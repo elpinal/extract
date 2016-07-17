@@ -50,11 +50,6 @@ func BenchmarkExtract(b *testing.B) {
 	for i, test := range tests {
 		b.Run(fmt.Sprint("L", i), func(b *testing.B) { benchmarkExtract(test.filename, b) })
 	}
-
-	noRegexp = true
-	for i, test := range tests {
-		b.Run(fmt.Sprint("L(noRegexp)", i), func(b *testing.B) { benchmarkExtract(test.filename, b) })
-	}
 }
 
 func benchmarkExtract(filename string, b *testing.B) {

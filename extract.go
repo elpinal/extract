@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"regexp"
 	"strings"
 
 	"golang.org/x/net/html"
@@ -38,7 +37,6 @@ var tagNamesToIgnoreOnlyItself = map[string]int{
 	"body": 0,
 }
 
-var negativeRegexp = regexp.MustCompile("breadcrumb|combx|comment|contact|disqus|foot|footer|footnote|hidden|link|media|meta|mod-conversations|pager|pagination|promo|reaction|related|scroll|share|shoutbox|sidebar|social|sponsor|tags|toolbox|widget")
 var negativePattern = []string{
 	"breadcrumb",
 	"combx",
@@ -68,7 +66,6 @@ var negativePattern = []string{
 	"toolbox",
 	"widget",
 }
-var positiveRegexp = regexp.MustCompile(`article|body|content|entry|hentry|page\b|post|text`)
 var positivePattern = []string{
 	"article",
 	"body",
@@ -137,8 +134,6 @@ func encoding(node *html.Node) string {
 	return ""
 }
 
-var noRegexp bool
-
 // FIXME: improve.
 // use machine learning.
 // consider length of text.
@@ -175,22 +170,13 @@ func Extract(rd io.Reader) (string, string, error) {
 			var classIDWeight int
 			for _, a := range n.Attr {
 				if a.Key == "class" || a.Key == "id" {
-					if noRegexp {
-						for _, pat := range positivePattern {
-							if indexWord(a.Val, pat) >= 0 {
-								classIDWeight++
-							}
-						}
-						for _, pat := range negativePattern {
-							if indexWord(a.Val, pat) >= 0 {
-								classIDWeight--
-							}
-						}
-					} else {
-						if s := positiveRegexp.FindString(a.Val); s != "" {
+					for _, pat := range positivePattern {
+						if indexWord(a.Val, pat) >= 0 {
 							classIDWeight++
 						}
-						if s := negativeRegexp.FindString(a.Val); s != "" {
+					}
+					for _, pat := range negativePattern {
+						if indexWord(a.Val, pat) >= 0 {
 							classIDWeight--
 						}
 					}
