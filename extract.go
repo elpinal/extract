@@ -61,6 +61,7 @@ var negativePattern = []string{
 	"toolbox",
 	"widget",
 }
+
 var positivePattern = []string{
 	"article",
 	"body",
