@@ -9,7 +9,7 @@ import (
 	"testing"
 )
 
-var tests = []struct {
+var extractTests = []struct {
 	filename string
 	title    string
 }{
@@ -20,7 +20,7 @@ var tests = []struct {
 }
 
 func TestExtract(t *testing.T) {
-	for i, test := range tests {
+	for i, test := range extractTests {
 		t.Run(fmt.Sprint("L", i), func(t *testing.T) { testExtract(test.filename, test.title, t) })
 	}
 }
@@ -47,7 +47,7 @@ func testExtract(filename, expectedTitle string, t *testing.T) {
 }
 
 func BenchmarkExtract(b *testing.B) {
-	for i, test := range tests {
+	for i, test := range extractTests {
 		b.Run(fmt.Sprint("L", i), func(b *testing.B) { benchmarkExtract(test.filename, b) })
 	}
 }
