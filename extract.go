@@ -13,23 +13,23 @@ import (
 )
 
 var tagNamesToIgnore = map[string]int{
+	"aside":    0,
 	"embed":    0,
 	"form":     0,
+	"head":     0,
 	"iframe":   0,
+	"link":     0,
+	"meta":     0,
+	"noscript": 0,
 	"object":   0,
 	"option":   0,
 	"script":   0,
 	"style":    0,
-	"meta":     0,
-	"link":     0,
-	"head":     0,
-	"aside":    0,
-	"noscript": 0,
 }
 
 var tagNamesToIgnoreOnlyItself = map[string]int{
-	"html": 0,
 	"body": 0,
+	"html": 0,
 }
 
 var negativePattern = []string{
