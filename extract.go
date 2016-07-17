@@ -84,7 +84,6 @@ func isAlphabetic(s byte) bool {
 	return ('A' <= s && s <= 'Z') || ('a' <= s && s <= 'z')
 }
 
-// TODO: add test.
 func indexWord(s, sep string) int {
 	i := strings.Index(s, sep)
 	n := len(sep)

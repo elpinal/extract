@@ -77,3 +77,26 @@ func benchmarkExtract(filename string, b *testing.B) {
 		}
 	}
 }
+
+var indexWordTests = []struct{
+	a string
+	b string
+	i int
+}{
+	{"foo", "baz", -1},
+	{"pager", "page", -1},
+	{"pager", "pager", 0},
+	{"new-pager", "pager", 4},
+	{"pager_left", "pager", 0},
+	{"newpagertext foo", "pager", -1},
+	{"block-pager page foo", "pager", 6},
+}
+
+func TestIndexWord(t *testing.T) {
+	for _, test := range indexWordTests {
+		actual := indexWord(test.a, test.b)
+		if actual != test.i {
+			t.Errorf("indexWord(%q,%q) = %v; want %v", test.a, test.b, actual, test.i)
+		}
+	}
+}
