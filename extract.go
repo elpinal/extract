@@ -41,6 +41,7 @@ var negativePattern = []string{
 	"foot",
 	"footer",
 	"footnote",
+	"header",
 	"hidden",
 	"link",
 	"media",
