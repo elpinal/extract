@@ -125,12 +125,12 @@ func encoding(node *html.Node) string {
 	return ""
 }
 
-// FIXME: improve.
-// use machine learning.
-// consider length of text.
-
 // Extract extracts title and main content from HTML.
 func Extract(rd io.Reader) (string, string, error) {
+	// FIXME: improve.
+	// use machine learning.
+	// consider length of text.
+
 	doc, err := html.Parse(rd)
 	if err != nil {
 		return "", "", err
