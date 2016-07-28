@@ -154,6 +154,9 @@ func Extract(rd io.Reader) (string, string, error) {
 					enc = e
 				}
 				if c.Type == html.ElementNode && c.Data == "title" {
+					if c.FirstChild == nil {
+						continue
+					}
 					title = c.FirstChild.Data
 					break
 				}

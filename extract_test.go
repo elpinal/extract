@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"path/filepath"
 	"runtime"
+	"strings"
 	"testing"
 )
 
@@ -93,5 +94,15 @@ func TestIndexWord(t *testing.T) {
 		if actual != test.i {
 			t.Errorf("indexWord(%q,%q) = %v; want %v", test.a, test.b, actual, test.i)
 		}
+	}
+}
+
+func TestFuzzCrashers(t *testing.T) {
+	var crashers = []string{
+		"<title>",
+	}
+
+	for _, f := range crashers {
+		Extract(strings.NewReader(f))
 	}
 }
