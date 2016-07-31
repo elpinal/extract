@@ -248,7 +248,7 @@ func extract(rd io.Reader, base *url.URL) (string, string, error) {
 	}
 	f(doc)
 	if nodes := levelSet[maxLevel]; len(nodes) == 0 {
-		return "", "", fmt.Errorf("%v", "There are no content")
+		return "", "", nil
 	} else if len(nodes) == 1 {
 		doc = nodes[0].Parent
 	} else {
