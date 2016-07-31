@@ -74,7 +74,7 @@ func benchmarkExtract(filename string, b *testing.B) {
 	}
 }
 
-var indexWordTests = []struct{
+var indexWordTests = []struct {
 	a string
 	b string
 	i int
