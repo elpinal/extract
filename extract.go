@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"net/url"
 	"strings"
 
 	"golang.org/x/net/html"
@@ -128,6 +129,19 @@ func encoding(node *html.Node) string {
 
 // Extract extracts title and main content from HTML.
 func Extract(rd io.Reader) (string, string, error) {
+	return extract(rd, &url.URL{})
+}
+
+// Extract extracts title and main content from HTML.
+func Base(rd io.Reader, base string) (string, string, error) {
+	u, err := url.Parse(base)
+	if err != nil {
+		return "", "", err
+	}
+	return extract(rd, u)
+}
+
+func extract(rd io.Reader, base *url.URL) (string, string, error) {
 	// FIXME: improve.
 	// use machine learning.
 	// consider length of text.
@@ -193,9 +207,17 @@ func Extract(rd io.Reader) (string, string, error) {
 				} else if n.Data == "img" {
 					attr := make([]html.Attribute, 0, 1)
 					for _, a := range n.Attr {
+						val := a.Val
 						switch a.Key {
-						case "src", "alt", "width", "height":
-							attr = append(attr, html.Attribute{Namespace: a.Namespace, Key: a.Key, Val: a.Val})
+						case "src":
+							u, err := url.Parse(val)
+							if err != nil {
+								return
+							}
+							val = base.ResolveReference(u).String()
+							fallthrough
+						case "alt", "width", "height":
+							attr = append(attr, html.Attribute{Namespace: a.Namespace, Key: a.Key, Val: val})
 						}
 					}
 					n.Attr = attr
