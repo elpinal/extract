@@ -2,7 +2,6 @@ package extract
 
 import (
 	"bytes"
-	"fmt"
 	"io"
 	"io/ioutil"
 	"net/url"
