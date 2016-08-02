@@ -199,7 +199,7 @@ func extract(rd io.Reader, base *url.URL) (string, string, error) {
 				if n.Data == "a" {
 					for _, a := range n.Attr {
 						if a.Key == "href" {
-							n.Attr = []html.Attribute{html.Attribute{Namespace: a.Namespace, Key: a.Key, Val: a.Val}}
+							n.Attr = []html.Attribute{{Namespace: a.Namespace, Key: a.Key, Val: a.Val}}
 							break
 						}
 					}
