@@ -1,8 +1,8 @@
+// +build gofuzz
+
 package extract
 
 import "bytes"
-
-// +build gofuzz
 
 func Fuzz(data []byte) int {
 	b := bytes.NewBuffer(data)
