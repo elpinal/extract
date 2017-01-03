@@ -131,7 +131,7 @@ func Extract(rd io.Reader) (string, string, error) {
 	return extract(rd, &url.URL{})
 }
 
-// Extract extracts title and main content from HTML.
+// Base is like Extract, but base is used to complete URL of links.
 func Base(rd io.Reader, base string) (string, string, error) {
 	u, err := url.Parse(base)
 	if err != nil {
