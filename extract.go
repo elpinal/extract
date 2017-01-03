@@ -86,9 +86,9 @@ func indexWord(s, sep string) int {
 		return i
 	case len(s) == n:
 		return i
-	case i == 0 && isAlphabetic(s[n:][0]):
+	case i == 0 && isAlphabetic(s[n]):
 		return -1
-	case i > 0 && isAlphabetic(s[i-1:][0]):
+	case i > 0 && isAlphabetic(s[i-1]):
 		return -1
 	}
 	return i
