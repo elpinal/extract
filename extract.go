@@ -185,41 +185,14 @@ func extract(rd io.Reader, base *url.URL) (string, string, error) {
 					}
 				}
 			}
-			if classIDWeight >= 0 {
-				if classIDWeight > 0 {
-					level++
-				}
-				if n.Data == "a" {
-					for _, a := range n.Attr {
-						if a.Key == "href" {
-							n.Attr = []html.Attribute{{Namespace: a.Namespace, Key: a.Key, Val: a.Val}}
-							break
-						}
-					}
-				} else if n.Data == "img" {
-					attr := make([]html.Attribute, 0, 1)
-					for _, a := range n.Attr {
-						val := a.Val
-						switch a.Key {
-						case "src":
-							u, err := url.Parse(val)
-							if err != nil {
-								return
-							}
-							val = base.ResolveReference(u).String()
-							fallthrough
-						case "alt", "width", "height":
-							attr = append(attr, html.Attribute{Namespace: a.Namespace, Key: a.Key, Val: val})
-						}
-					}
-					n.Attr = attr
-				} else {
-					n.Attr = nil
-				}
-			} else {
+			if classIDWeight < 0 {
 				removeChild(n.Parent, n)
 				return
 			}
+			if classIDWeight > 0 {
+				level++
+			}
+			setAttribute(n, base)
 		} else if (n.Type == html.ElementNode && toIgnore) || (n.Type == html.CommentNode) {
 			removeChild(n.Parent, n)
 			return
@@ -282,6 +255,37 @@ func scanHead(n *html.Node) (enc, title string) {
 		}
 	}
 	return enc, title
+}
+
+func setAttribute(n *html.Node, base *url.URL) {
+	switch n.Data {
+	case "a":
+		for _, a := range n.Attr {
+			if a.Key == "href" {
+				n.Attr = []html.Attribute{{Namespace: a.Namespace, Key: a.Key, Val: a.Val}}
+				break
+			}
+		}
+	case "img":
+		attr := make([]html.Attribute, 0, 1)
+		for _, a := range n.Attr {
+			val := a.Val
+			switch a.Key {
+			case "src":
+				u, err := url.Parse(val)
+				if err != nil {
+					return
+				}
+				val = base.ResolveReference(u).String()
+				fallthrough
+			case "alt", "width", "height":
+				attr = append(attr, html.Attribute{Namespace: a.Namespace, Key: a.Key, Val: val})
+			}
+		}
+		n.Attr = attr
+	default:
+		n.Attr = nil
+	}
 }
 
 func conversion(inStream io.Reader, outStream io.Writer, enc string) error {
