@@ -161,19 +161,12 @@ func extract(rd io.Reader, base *url.URL) (string, string, error) {
 			ignoreItself = true
 		}
 
-		if n.Type == html.ElementNode && n.Data == "head" {
-			for c := n.FirstChild; c != nil; c = c.NextSibling {
-				if e := encoding(c); e != "" {
-					enc = e
-				}
-				if c.Type == html.ElementNode && c.Data == "title" {
-					if c.FirstChild == nil {
-						continue
-					}
-					title = c.FirstChild.Data
-					break
-				}
-			}
+		e, t := scanHead(n)
+		if e != "" {
+			enc = e
+		}
+		if t != "" {
+			title = t
 		}
 
 		if _, toIgnore := tagNamesToIgnore[n.Data]; n.Type == html.ElementNode && !toIgnore && !ignoreItself {
@@ -271,6 +264,24 @@ func extract(rd io.Reader, base *url.URL) (string, string, error) {
 	content := conversionString(&b, enc)
 	title = conversionString(strings.NewReader(title), enc)
 	return title, content, nil
+}
+
+func scanHead(n *html.Node) (enc, title string) {
+	if n.Type == html.ElementNode && n.Data == "head" {
+		for c := n.FirstChild; c != nil; c = c.NextSibling {
+			if e := encoding(c); e != "" {
+				enc = e
+			}
+			if c.Type == html.ElementNode && c.Data == "title" {
+				if c.FirstChild == nil {
+					continue
+				}
+				title = c.FirstChild.Data
+				break
+			}
+		}
+	}
+	return enc, title
 }
 
 func conversion(inStream io.Reader, outStream io.Writer, enc string) error {
