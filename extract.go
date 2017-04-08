@@ -169,7 +169,12 @@ func extract(rd io.Reader, base *url.URL) (string, string, error) {
 			title = t
 		}
 
-		if _, toIgnore := tagNamesToIgnore[n.Data]; n.Type == html.ElementNode && !toIgnore && !ignoreItself {
+		_, toIgnore := tagNamesToIgnore[n.Data]
+		if (n.Type == html.ElementNode && toIgnore) || (n.Type == html.CommentNode) {
+			removeChild(n.Parent, n)
+			return
+		}
+		if n.Type == html.ElementNode && !toIgnore && !ignoreItself {
 			var classIDWeight int
 			for _, a := range n.Attr {
 				if a.Key == "class" || a.Key == "id" {
@@ -193,9 +198,6 @@ func extract(rd io.Reader, base *url.URL) (string, string, error) {
 				level++
 			}
 			setAttribute(n, base)
-		} else if (n.Type == html.ElementNode && toIgnore) || (n.Type == html.CommentNode) {
-			removeChild(n.Parent, n)
-			return
 		}
 		if n.Type == html.TextNode {
 			levelSet[level] = append(levelSet[level], n)
