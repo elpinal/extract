@@ -152,7 +152,8 @@ func extract(rd io.Reader, base *url.URL) (string, string, error) {
 	enc, title, nodes := parse(doc, base)
 	if len(nodes) == 0 {
 		return title, "", nil
-	} else if len(nodes) == 1 {
+	}
+	if len(nodes) == 1 {
 		doc = nodes[0].Parent
 	} else {
 		var commonAncestor *html.Node
