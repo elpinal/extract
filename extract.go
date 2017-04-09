@@ -277,13 +277,12 @@ func scanHead(n *html.Node) (enc, title string) {
 		if e := encoding(c); e != "" {
 			enc = e
 		}
-		if c.Type == html.ElementNode && c.Data == "title" {
-			if c.FirstChild == nil {
-				continue
-			}
-			title = c.FirstChild.Data
-			break
+		switch {
+		case c.Type != html.ElementNode, c.Data != "title", c.FirstChild == nil:
+			continue
 		}
+		title = c.FirstChild.Data
+		break
 	}
 	return enc, title
 }
