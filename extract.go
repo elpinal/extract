@@ -113,15 +113,16 @@ func removeChild(n, c *html.Node) {
 }
 
 func encoding(node *html.Node) string {
-	if node.Type == html.ElementNode && node.Data == "meta" {
-		for _, a := range node.Attr {
-			if a.Key == "charset" {
-				return a.Val
-			}
-			prefix := "charset="
-			if i := strings.Index(a.Val, prefix); a.Key == "content" && i >= 0 {
-				return a.Val[i+len(prefix):]
-			}
+	if node.Type != html.ElementNode || node.Data != "meta" {
+		return ""
+	}
+	for _, a := range node.Attr {
+		if a.Key == "charset" {
+			return a.Val
+		}
+		prefix := "charset="
+		if i := strings.Index(a.Val, prefix); a.Key == "content" && i >= 0 {
+			return a.Val[i+len(prefix):]
 		}
 	}
 	return ""
