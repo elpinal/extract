@@ -318,17 +318,17 @@ func cleanAttribute(n *html.Node, base *url.URL) {
 }
 
 func convert(inStream io.Reader, outStream io.Writer, enc string) error {
-	var render io.Reader
+	var decoder io.Reader
 	switch strings.ToLower(enc) {
 	case "euc-jp":
-		render = transform.NewReader(inStream, japanese.EUCJP.NewDecoder())
+		decoder = transform.NewReader(inStream, japanese.EUCJP.NewDecoder())
 	case "shift_jis":
-		render = transform.NewReader(inStream, japanese.ShiftJIS.NewDecoder())
+		decoder = transform.NewReader(inStream, japanese.ShiftJIS.NewDecoder())
 	default:
-		render = inStream
+		decoder = inStream
 	}
 
-	_, err := io.Copy(outStream, render)
+	_, err := io.Copy(outStream, decoder)
 	return err
 }
 
