@@ -334,12 +334,12 @@ func convert(inStream io.Reader, outStream io.Writer, enc string) error {
 }
 
 func convertString(rd io.Reader, enc string) string {
-	var bf bytes.Buffer
-	err := convert(rd, &bf, enc)
+	var buf bytes.Buffer
+	err := convert(rd, &buf, enc)
 	if err != nil {
 		return ""
 	}
-	bt, err := ioutil.ReadAll(&bf)
+	bt, err := ioutil.ReadAll(&buf)
 	if err != nil {
 		return ""
 	}
