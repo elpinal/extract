@@ -185,6 +185,25 @@ func isIgnoreItself(n *html.Node) bool {
 	return false
 }
 
+func weightByClassID(n *html.Node) int {
+	var weight int
+	for _, a := range n.Attr {
+		if a.Key == "class" || a.Key == "id" {
+			for _, pat := range positivePattern {
+				if indexWord(a.Val, pat) >= 0 {
+					weight++
+				}
+			}
+			for _, pat := range negativePattern {
+				if indexWord(a.Val, pat) >= 0 {
+					weight--
+				}
+			}
+		}
+	}
+	return weight
+}
+
 func parse(n *html.Node, base *url.URL) (enc, title string, nodes []*html.Node) {
 	p := parser{base: base}
 	return p.parse(n, 0, make([]*html.Node, 0, 8))
@@ -213,21 +232,7 @@ func (p *parser) parse(n *html.Node, prelevel int, levelSet []*html.Node) (enc, 
 		return
 	}
 	if n.Type == html.ElementNode && !toIgnore && !isIgnoreItself(n) {
-		var weight int
-		for _, a := range n.Attr {
-			if a.Key == "class" || a.Key == "id" {
-				for _, pat := range positivePattern {
-					if indexWord(a.Val, pat) >= 0 {
-						weight++
-					}
-				}
-				for _, pat := range negativePattern {
-					if indexWord(a.Val, pat) >= 0 {
-						weight--
-					}
-				}
-			}
-		}
+		weight := weightByClassID(n)
 		if weight < 0 {
 			removeChild(n.Parent, n)
 			return
