@@ -178,6 +178,13 @@ func extract(rd io.Reader, base *url.URL) (string, string, error) {
 	return title, content, nil
 }
 
+func isIgnoreItself(n *html.Node) bool {
+	if _, toIgnoreItself := tagNamesToIgnoreOnlyItself[n.Data]; n.Type == html.ElementNode && toIgnoreItself {
+		return true
+	}
+	return false
+}
+
 func parse(n *html.Node, base *url.URL) (enc, title string, nodes []*html.Node) {
 	p := parser{base: base}
 	return p.parse(n, 0, make([]*html.Node, 0, 8))
@@ -189,11 +196,6 @@ type parser struct {
 }
 
 func (p *parser) parse(n *html.Node, prelevel int, levelSet []*html.Node) (enc, title string, nodes []*html.Node) {
-	var ignoreItself bool
-	if _, toIgnoreItself := tagNamesToIgnoreOnlyItself[n.Data]; n.Type == html.ElementNode && toIgnoreItself {
-		ignoreItself = true
-	}
-
 	e, t := scanHead(n)
 	if e != "" {
 		enc = e
@@ -210,7 +212,7 @@ func (p *parser) parse(n *html.Node, prelevel int, levelSet []*html.Node) (enc, 
 		removeChild(n.Parent, n)
 		return
 	}
-	if n.Type == html.ElementNode && !toIgnore && !ignoreItself {
+	if n.Type == html.ElementNode && !toIgnore && !isIgnoreItself(n) {
 		var classIDWeight int
 		for _, a := range n.Attr {
 			if a.Key == "class" || a.Key == "id" {
