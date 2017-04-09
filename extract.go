@@ -213,26 +213,26 @@ func (p *parser) parse(n *html.Node, prelevel int, levelSet []*html.Node) (enc, 
 		return
 	}
 	if n.Type == html.ElementNode && !toIgnore && !isIgnoreItself(n) {
-		var classIDWeight int
+		var weight int
 		for _, a := range n.Attr {
 			if a.Key == "class" || a.Key == "id" {
 				for _, pat := range positivePattern {
 					if indexWord(a.Val, pat) >= 0 {
-						classIDWeight++
+						weight++
 					}
 				}
 				for _, pat := range negativePattern {
 					if indexWord(a.Val, pat) >= 0 {
-						classIDWeight--
+						weight--
 					}
 				}
 			}
 		}
-		if classIDWeight < 0 {
+		if weight < 0 {
 			removeChild(n.Parent, n)
 			return
 		}
-		if classIDWeight > 0 {
+		if weight > 0 {
 			level++
 		}
 		setAttribute(n, p.base)
