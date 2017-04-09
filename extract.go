@@ -3,7 +3,6 @@ package extract
 import (
 	"bytes"
 	"io"
-	"io/ioutil"
 	"net/url"
 	"strings"
 
@@ -339,9 +338,5 @@ func convertString(rd io.Reader, enc string) string {
 	if err != nil {
 		return ""
 	}
-	b, err := ioutil.ReadAll(&buf)
-	if err != nil {
-		return ""
-	}
-	return string(b)
+	return buf.String()
 }
