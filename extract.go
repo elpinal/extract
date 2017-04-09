@@ -270,18 +270,19 @@ func (p *parser) parse(n *html.Node, prelevel int, levelSet []*html.Node) (enc, 
 }
 
 func scanHead(n *html.Node) (enc, title string) {
-	if n.Type == html.ElementNode && n.Data == "head" {
-		for c := n.FirstChild; c != nil; c = c.NextSibling {
-			if e := encoding(c); e != "" {
-				enc = e
+	if n.Type != html.ElementNode || n.Data != "head" {
+		return
+	}
+	for c := n.FirstChild; c != nil; c = c.NextSibling {
+		if e := encoding(c); e != "" {
+			enc = e
+		}
+		if c.Type == html.ElementNode && c.Data == "title" {
+			if c.FirstChild == nil {
+				continue
 			}
-			if c.Type == html.ElementNode && c.Data == "title" {
-				if c.FirstChild == nil {
-					continue
-				}
-				title = c.FirstChild.Data
-				break
-			}
+			title = c.FirstChild.Data
+			break
 		}
 	}
 	return enc, title
