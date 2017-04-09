@@ -179,8 +179,8 @@ func extract(rd io.Reader, base *url.URL) (string, string, error) {
 	}
 	var b bytes.Buffer
 	html.Render(&b, doc)
-	content := conversionString(&b, enc)
-	title = conversionString(strings.NewReader(title), enc)
+	content := convertString(&b, enc)
+	title = convertString(strings.NewReader(title), enc)
 	return title, content, nil
 }
 
@@ -318,7 +318,7 @@ func setAttribute(n *html.Node, base *url.URL) {
 	}
 }
 
-func conversion(inStream io.Reader, outStream io.Writer, enc string) error {
+func convert(inStream io.Reader, outStream io.Writer, enc string) error {
 	var render io.Reader
 	switch strings.ToLower(enc) {
 	case "euc-jp":
@@ -333,9 +333,9 @@ func conversion(inStream io.Reader, outStream io.Writer, enc string) error {
 	return err
 }
 
-func conversionString(rd io.Reader, enc string) string {
+func convertString(rd io.Reader, enc string) string {
 	var bf bytes.Buffer
-	err := conversion(rd, &bf, enc)
+	err := convert(rd, &bf, enc)
 	if err != nil {
 		return ""
 	}
