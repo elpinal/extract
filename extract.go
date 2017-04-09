@@ -317,7 +317,7 @@ func cleanAttribute(n *html.Node, base *url.URL) {
 	}
 }
 
-func convert(r io.Reader, outStream io.Writer, enc string) error {
+func convert(r io.Reader, w io.Writer, enc string) error {
 	var decoder io.Reader
 	switch strings.ToLower(enc) {
 	case "euc-jp":
@@ -328,7 +328,7 @@ func convert(r io.Reader, outStream io.Writer, enc string) error {
 		decoder = r
 	}
 
-	_, err := io.Copy(outStream, decoder)
+	_, err := io.Copy(w, decoder)
 	return err
 }
 
