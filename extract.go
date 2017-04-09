@@ -216,13 +216,7 @@ type parser struct {
 }
 
 func (p *parser) parse(n *html.Node, prelevel int, levelSet []*html.Node) (enc, title string, nodes []*html.Node) {
-	e, t := scanHead(n)
-	if e != "" {
-		enc = e
-	}
-	if t != "" {
-		title = t
-	}
+	enc, title = scanHead(n)
 
 	level := prelevel
 	nodes = levelSet
