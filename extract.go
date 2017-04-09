@@ -149,12 +149,11 @@ func extract(rd io.Reader, base *url.URL) (string, string, error) {
 	if err != nil {
 		return "", "", err
 	}
-	var title, enc string
 	var level int
 	var maxLevel int
 	var levelSet = make(map[int][]*html.Node)
-	var f func(*html.Node)
-	f = func(n *html.Node) {
+	var f func(*html.Node) (string, string)
+	f = func(n *html.Node) (enc, title string) {
 		var preLevel = level
 		var ignoreItself bool
 		if _, toIgnoreItself := tagNamesToIgnoreOnlyItself[n.Data]; n.Type == html.ElementNode && toIgnoreItself {
@@ -203,7 +202,13 @@ func extract(rd io.Reader, base *url.URL) (string, string, error) {
 			levelSet[level] = append(levelSet[level], n)
 		}
 		for c := n.FirstChild; c != nil; c = c.NextSibling {
-			f(c)
+			e, t := f(c)
+			if e != "" {
+				enc = e
+			}
+			if t != "" {
+				title = t
+			}
 		}
 		if level > maxLevel {
 			maxLevel = level
@@ -212,8 +217,9 @@ func extract(rd io.Reader, base *url.URL) (string, string, error) {
 		if n.Type == html.ElementNode && n.Data == "div" && n.FirstChild == nil {
 			removeChild(n.Parent, n)
 		}
+		return
 	}
-	f(doc)
+	enc, title := f(doc)
 	if nodes := levelSet[maxLevel]; len(nodes) == 0 {
 		return title, "", nil
 	} else if len(nodes) == 1 {
