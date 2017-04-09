@@ -112,7 +112,7 @@ func removeChild(n, c *html.Node) {
 	}
 }
 
-const prefix = "charset="
+const encPrefix = "charset="
 
 func encoding(node *html.Node) string {
 	if node.Type != html.ElementNode || node.Data != "meta" {
@@ -122,8 +122,8 @@ func encoding(node *html.Node) string {
 		if a.Key == "charset" {
 			return a.Val
 		}
-		if i := strings.Index(a.Val, prefix); a.Key == "content" && i >= 0 {
-			return a.Val[i+len(prefix):]
+		if i := strings.Index(a.Val, encPrefix); a.Key == "content" && i >= 0 {
+			return a.Val[i+len(encPrefix):]
 		}
 	}
 	return ""
