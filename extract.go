@@ -339,9 +339,9 @@ func convertString(rd io.Reader, enc string) string {
 	if err != nil {
 		return ""
 	}
-	bt, err := ioutil.ReadAll(&buf)
+	b, err := ioutil.ReadAll(&buf)
 	if err != nil {
 		return ""
 	}
-	return string(bt)
+	return string(b)
 }
