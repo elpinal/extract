@@ -177,9 +177,9 @@ func extract(rd io.Reader, base *url.URL) (string, string, error) {
 		}
 		doc = commonAncestor
 	}
-	var b bytes.Buffer
-	html.Render(&b, doc)
-	content := convertString(&b, enc)
+	var buf bytes.Buffer
+	html.Render(&buf, doc)
+	content := convertString(&buf, enc)
 	title = convertString(strings.NewReader(title), enc)
 	return title, content, nil
 }
