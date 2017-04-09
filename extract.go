@@ -149,12 +149,10 @@ func extract(rd io.Reader, base *url.URL) (string, string, error) {
 	if err != nil {
 		return "", "", err
 	}
-	var level int
 	var maxLevel int
 	var levelSet = make(map[int][]*html.Node)
-	var f func(*html.Node) (string, string)
-	f = func(n *html.Node) (enc, title string) {
-		var preLevel = level
+	var f func(*html.Node, int) (string, string)
+	f = func(n *html.Node, prelevel int) (enc, title string) {
 		var ignoreItself bool
 		if _, toIgnoreItself := tagNamesToIgnoreOnlyItself[n.Data]; n.Type == html.ElementNode && toIgnoreItself {
 			ignoreItself = true
@@ -167,6 +165,8 @@ func extract(rd io.Reader, base *url.URL) (string, string, error) {
 		if t != "" {
 			title = t
 		}
+
+		level := prelevel
 
 		_, toIgnore := tagNamesToIgnore[n.Data]
 		if (n.Type == html.ElementNode && toIgnore) || (n.Type == html.CommentNode) {
@@ -202,7 +202,7 @@ func extract(rd io.Reader, base *url.URL) (string, string, error) {
 			levelSet[level] = append(levelSet[level], n)
 		}
 		for c := n.FirstChild; c != nil; c = c.NextSibling {
-			e, t := f(c)
+			e, t := f(c, level)
 			if e != "" {
 				enc = e
 			}
@@ -213,13 +213,12 @@ func extract(rd io.Reader, base *url.URL) (string, string, error) {
 		if level > maxLevel {
 			maxLevel = level
 		}
-		level = preLevel
 		if n.Type == html.ElementNode && n.Data == "div" && n.FirstChild == nil {
 			removeChild(n.Parent, n)
 		}
 		return
 	}
-	enc, title := f(doc)
+	enc, title := f(doc, 0)
 	if nodes := levelSet[maxLevel]; len(nodes) == 0 {
 		return title, "", nil
 	} else if len(nodes) == 1 {
