@@ -240,7 +240,7 @@ func (p *parser) parse(n *html.Node, prelevel int, levelSet []*html.Node) (enc, 
 		if weight > 0 {
 			level++
 		}
-		setAttribute(n, p.base)
+		cleanAttribute(n, p.base)
 	}
 	if n.Type == html.TextNode {
 		if level > p.level {
@@ -287,7 +287,7 @@ func scanHead(n *html.Node) (enc, title string) {
 	return enc, title
 }
 
-func setAttribute(n *html.Node, base *url.URL) {
+func cleanAttribute(n *html.Node, base *url.URL) {
 	switch n.Data {
 	case "a":
 		for _, a := range n.Attr {
