@@ -149,82 +149,7 @@ func extract(rd io.Reader, base *url.URL) (string, string, error) {
 	if err != nil {
 		return "", "", err
 	}
-	var maxLevel int
-	var f func(*html.Node, int, []*html.Node) (string, string, []*html.Node)
-	f = func(n *html.Node, prelevel int, levelSet []*html.Node) (enc, title string, nodes []*html.Node) {
-		var ignoreItself bool
-		if _, toIgnoreItself := tagNamesToIgnoreOnlyItself[n.Data]; n.Type == html.ElementNode && toIgnoreItself {
-			ignoreItself = true
-		}
-
-		e, t := scanHead(n)
-		if e != "" {
-			enc = e
-		}
-		if t != "" {
-			title = t
-		}
-
-		level := prelevel
-		nodes = levelSet
-
-		_, toIgnore := tagNamesToIgnore[n.Data]
-		if (n.Type == html.ElementNode && toIgnore) || (n.Type == html.CommentNode) {
-			removeChild(n.Parent, n)
-			return
-		}
-		if n.Type == html.ElementNode && !toIgnore && !ignoreItself {
-			var classIDWeight int
-			for _, a := range n.Attr {
-				if a.Key == "class" || a.Key == "id" {
-					for _, pat := range positivePattern {
-						if indexWord(a.Val, pat) >= 0 {
-							classIDWeight++
-						}
-					}
-					for _, pat := range negativePattern {
-						if indexWord(a.Val, pat) >= 0 {
-							classIDWeight--
-						}
-					}
-				}
-			}
-			if classIDWeight < 0 {
-				removeChild(n.Parent, n)
-				return
-			}
-			if classIDWeight > 0 {
-				level++
-			}
-			setAttribute(n, base)
-		}
-		if n.Type == html.TextNode {
-			if level > maxLevel {
-				nodes = []*html.Node{n}
-			}
-			if level == maxLevel {
-				nodes = append(nodes, n)
-			}
-		}
-		for c := n.FirstChild; c != nil; c = c.NextSibling {
-			e, t, n := f(c, level, nodes)
-			if e != "" {
-				enc = e
-			}
-			if t != "" {
-				title = t
-			}
-			nodes = n
-		}
-		if level > maxLevel {
-			maxLevel = level
-		}
-		if n.Type == html.ElementNode && n.Data == "div" && n.FirstChild == nil {
-			removeChild(n.Parent, n)
-		}
-		return
-	}
-	enc, title, nodes := f(doc, 0, make([]*html.Node, 0, 8))
+	enc, title, nodes := parse(doc, base)
 	if len(nodes) == 0 {
 		return title, "", nil
 	} else if len(nodes) == 1 {
@@ -250,6 +175,90 @@ func extract(rd io.Reader, base *url.URL) (string, string, error) {
 	content := conversionString(&b, enc)
 	title = conversionString(strings.NewReader(title), enc)
 	return title, content, nil
+}
+
+func parse(n *html.Node, base *url.URL) (enc, title string, nodes []*html.Node) {
+	p := parser{base: base}
+	return p.parse(n, 0, make([]*html.Node, 0, 8))
+}
+
+type parser struct {
+	level int
+	base  *url.URL
+}
+
+func (p *parser) parse(n *html.Node, prelevel int, levelSet []*html.Node) (enc, title string, nodes []*html.Node) {
+	var ignoreItself bool
+	if _, toIgnoreItself := tagNamesToIgnoreOnlyItself[n.Data]; n.Type == html.ElementNode && toIgnoreItself {
+		ignoreItself = true
+	}
+
+	e, t := scanHead(n)
+	if e != "" {
+		enc = e
+	}
+	if t != "" {
+		title = t
+	}
+
+	level := prelevel
+	nodes = levelSet
+
+	_, toIgnore := tagNamesToIgnore[n.Data]
+	if (n.Type == html.ElementNode && toIgnore) || (n.Type == html.CommentNode) {
+		removeChild(n.Parent, n)
+		return
+	}
+	if n.Type == html.ElementNode && !toIgnore && !ignoreItself {
+		var classIDWeight int
+		for _, a := range n.Attr {
+			if a.Key == "class" || a.Key == "id" {
+				for _, pat := range positivePattern {
+					if indexWord(a.Val, pat) >= 0 {
+						classIDWeight++
+					}
+				}
+				for _, pat := range negativePattern {
+					if indexWord(a.Val, pat) >= 0 {
+						classIDWeight--
+					}
+				}
+			}
+		}
+		if classIDWeight < 0 {
+			removeChild(n.Parent, n)
+			return
+		}
+		if classIDWeight > 0 {
+			level++
+		}
+		setAttribute(n, p.base)
+	}
+	if n.Type == html.TextNode {
+		if level > p.level {
+			nodes = []*html.Node{n}
+		}
+		if level == p.level {
+			nodes = append(nodes, n)
+		}
+	}
+	for c := n.FirstChild; c != nil; c = c.NextSibling {
+		e, t, n := p.parse(c, level, nodes)
+		if e != "" {
+			enc = e
+		}
+		if t != "" {
+			title = t
+		}
+		nodes = n
+	}
+	if level > p.level {
+		p.level = level
+	}
+	if n.Type == html.ElementNode && n.Data == "div" && n.FirstChild == nil {
+		removeChild(n.Parent, n)
+	}
+	return
 }
 
 func scanHead(n *html.Node) (enc, title string) {
