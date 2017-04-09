@@ -118,8 +118,9 @@ func encoding(node *html.Node) string {
 			if a.Key == "charset" {
 				return a.Val
 			}
-			if i := strings.Index(a.Val, "charset="); a.Key == "content" && i >= 0 {
-				return a.Val[i+8:]
+			prefix := "charset="
+			if i := strings.Index(a.Val, prefix); a.Key == "content" && i >= 0 {
+				return a.Val[i+len(prefix):]
 			}
 		}
 	}
