@@ -163,8 +163,8 @@ func extract(rd io.Reader, base *url.URL) (string, string, error) {
 	} else {
 		var commonAncestor *html.Node
 	loop:
-		for f, s, i := nodes[0].Parent, nodes[1].Parent, 0; i < len(nodes)-1; f, i = commonAncestor, i+1 {
-			s = nodes[i+1].Parent
+		for f, i := nodes[0].Parent, 0; i < len(nodes)-1; f, i = commonAncestor, i+1 {
+			s := nodes[i+1].Parent
 			for c := f; c != nil; c = c.Parent {
 				for c2 := s; c2 != nil; c2 = c2.Parent {
 					if c == c2 {
