@@ -15,7 +15,8 @@ $ go get -u github.com/elpinal/extract
 ## Examples
 
 ```go
-title, content, err := extract.Extract(strings.NewReader("<head> <title> I am a Gopher </title> </head> <p>This is a content</p>"))
+src := "<head> <title> I am a Gopher </title> </head> <p>This is a content</p>"
+title, content, err := extract.Extract(strings.NewReader(src))
 ```
 
 ## Contribution
